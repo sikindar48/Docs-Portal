@@ -1,0 +1,237 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a beautiful and modern CSS
+ * framework designed by the Docusaurus team.
+ *
+ * Learn more at https://infima.dev
+ */
+
+/* You can override the default Infima CSS variables here. */
+:root {
+  --ifm-color-primary: #0066cc;
+  --ifm-color-primary-dark: #0052a3;
+  --ifm-color-primary-darker: #00478f;
+  --ifm-color-primary-darkest: #002e5c;
+  --ifm-color-primary-light: #3385d6;
+  --ifm-color-primary-lighter: #4d91dd;
+  --ifm-color-primary-lightest: #7aafea;
+
+  --ifm-code-font-size: 95%;
+  --docusaurus-published-at: rgb(101, 105, 115);
+  --docusaurus-tag-background-color: #ebedf0;
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  --ifm-color-primary: #4da6ff;
+  --ifm-color-primary-dark: #3d94e6;
+  --ifm-color-primary-darker: #3589d9;
+  --ifm-color-primary-darkest: #1f5ba3;
+  --ifm-color-primary-light: #5db3ff;
+  --ifm-color-primary-lighter: #6bc0ff;
+  --ifm-color-primary-lightest: #a4d4ff;
+  --docusaurus-tag-background-color: #25292e;
+}
+
+.docTitle {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.docSubtitle {
+  font-size: 1.5rem;
+  color: #666;
+  margin-bottom: 3rem;
+}
+
+.productGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.productCard {
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  background: #fff;
+  text-decoration: none;
+  color: inherit;
+}
+
+[data-theme='dark'] .productCard {
+  background: #1a1a1a;
+  border-color: #444;
+}
+
+.productCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
+  border-color: var(--ifm-color-primary);
+}
+
+[data-theme='dark'] .productCard:hover {
+  box-shadow: 0 8px 24px rgba(77, 166, 255, 0.15);
+}
+
+.productIcon {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 1rem;
+  font-size: 3rem;
+}
+
+.productName {
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--ifm-color-primary);
+}
+
+.productDescription {
+  font-size: 1rem;
+  color: #666;
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+  line-height: 1.6;
+}
+
+[data-theme='dark'] .productDescription {
+  color: #ccc;
+}
+
+.productButton {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: var(--ifm-color-primary);
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.productButton:hover {
+  background: var(--ifm-color-primary-dark);
+  text-decoration: none;
+  transform: translateX(2px);
+}
+
+.heroSection {
+  text-align: center;
+  padding: 4rem 2rem;
+  background: linear-gradient(135deg, #0066cc 0%, #004299 100%);
+  color: white;
+  border-radius: 12px;
+  margin-bottom: 4rem;
+}
+
+[data-theme='dark'] .heroSection {
+  background: linear-gradient(135deg, #1a4d99 0%, #0d2a5c 100%);
+}
+
+.heroTitle {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.heroSubtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+  margin-bottom: 1.5rem;
+}
+
+.quickLinks {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+
+.quickLinkBtn {
+  padding: 0.75rem 1.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid white;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.quickLinkBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  text-decoration: none;
+}
+
+.featureHighlight {
+  padding: 2rem;
+  background: #f5f5f5;
+  border-left: 4px solid var(--ifm-color-primary);
+  border-radius: 6px;
+  margin: 2rem 0;
+}
+
+[data-theme='dark'] .featureHighlight {
+  background: #222;
+  border-left-color: var(--ifm-color-primary-light);
+}
+
+.statsSection {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  margin: 3rem 0;
+}
+
+.statBox {
+  text-align: center;
+  padding: 2rem;
+}
+
+.statNumber {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 0.5rem;
+}
+
+.statLabel {
+  font-size: 1rem;
+  color: #666;
+}
+
+[data-theme='dark'] .statLabel {
+  color: #ccc;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .heroTitle {
+    font-size: 2rem;
+  }
+
+  .docTitle {
+    font-size: 2rem;
+  }
+
+  .productGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .quickLinks {
+    flex-direction: column;
+  }
+
+  .quickLinkBtn {
+    width: 100%;
+  }
+}
