@@ -11,75 +11,66 @@ NS Exam Portal is a production-grade multi-tenant online examination platform de
 ## System Architecture
 
 ### High-Level Architecture
-```
-┌─────────────────────────────────────────────────────────────────────────┐
-│                        Browser (React SPA)                              │
-│   ┌─────────────┬─────────────┬──────────────┬─────────────┐           │
-│   │ SuperAdmin  │ ClientAdmin │   Student    │    Guest    │           │
-│   │  Dashboard  │  Dashboard  │  Dashboard   │  Join Flow  │           │
-│   └─────────────┴─────────────┴──────────────┴─────────────┘           │
-│                                                                         │
-│                        React Router v6                                  │
-│                        Role-based Layouts                               │
-│                        Protected Routes                                 │
-└──────────────────────────────┬──────────────────────────────────────────┘
-                               │ HTTPS/JSON + Firebase ID Tokens
-                               ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                  Express Backend (GCP Cloud Run)                        │
-│                                                                         │
-│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐                 │
-│   │  Firebase   │   │   Auth &    │   │    REST     │                 │
-│   │  Admin SDK  │◄──│  Authz      │◄──│   Routes    │                 │
-│   │  (JWT)      │   │ Middleware  │   │             │                 │
-│   └─────────────┘   └─────────────┘   └─────────────┘                 │
-│                            │                                           │
-│                            ▼                                           │
-│   ┌─────────────┐   ┌─────────────┐   ┌─────────────┐                 │
-│   │  Services   │   │   Turso     │   │    RPC       │                 │
-│   │   Layer     │──►│   Database  │──►│  Handlers    │                 │
-│   │ (Business   │   │  (libSQL)   │   │ (Grading,    │                 │
-│   │   Logic)    │   │             │   │  Cloning)    │                 │
-│   └─────────────┘   └─────────────┘   └─────────────┘                 │
-└─────────────────────────────────────────────────────────────────────────┘
-                               │ SQL Queries
-                               ▼
-┌─────────────────────────────────────────────────────────────────────────┐
-│                      Turso Database                                      │
-│                                                                         │
-│   ┌───────────────────────────────────────────────────────┐             │
-│   │                    Multi-Tenant Schema                │             │
-│   │   clients ──► tests ──► attempts ──► attempt_answers  │             │
-│   │      │            │           │                        │             │
-│   │      ▼            ▼           ▼                        │             │
-│   │   profiles  questions   proctoring_events              │             │
-│   │      │            │           │                        │             │
-│   │      ▼            ▼           ▼                        │             │
-│   │ user_roles  test_questions  audit_logs                 │             │
-│   └───────────────────────────────────────────────────────┘             │
-│                                                                         │
-│   ┌───────────────────────────────────────────────────────┐             │
-│   │               Subscription & Billing                  │             │
-│   │   subscription_plans ──► client_subscriptions        │             │
-│   │         │                           │                 │             │
-│   │         ▼                           ▼                 │             │
-│   │   subscription_plan_features   subscription_history   │             │
-│   │                                                 │     │             │
-│   │                                                 ▼     │             │
-│   │                                         client_limits │             │
-│   └───────────────────────────────────────────────────────┘             │
-│                                                                         │
-│   ┌───────────────────────────────────────────────────────┐             │
-│   │                Pay Per Test System                    │             │
-│   │   test_packages ──► client_test_purchases            │             │
-│   │         │                           │                 │             │
-│   │         ▼                           ▼                 │             │
-│   │   test_billing ────────┐   client_features            │             │
-│   └────────────────────────│──────────────────────────────┘             │
-│                            ▼                                            │
-│                    client_usage_monthly                                 │
-│                                                                         │
-└─────────────────────────────────────────────────────────────────────────┘
+
+```mermaid
+graph TD
+    classDef browser fill:#f3f4f6,stroke:#4b5563,stroke-width:1px,color:#1f2937;
+    classDef backend fill:#eff6ff,stroke:#2563eb,stroke-width:1px,color:#1e3a8a;
+    classDef db fill:#ecfdf5,stroke:#059669,stroke-width:1px,color:#064e3b;
+    classDef default fill:#ffffff,stroke:#9ca3af,stroke-width:1px,color:#374151;
+
+    subgraph Browser ["Browser (React SPA)"]
+        direction LR
+        SA["SuperAdmin Dashboard"]:::browser
+        CA["ClientAdmin Dashboard"]:::browser
+        S["Student Dashboard"]:::browser
+        G["Guest Join Flow"]:::browser
+    end
+
+    Router["React Router v6<br>(Role-based Layouts & Protected Routes)"]
+    Browser --> Router
+
+    Router -- "HTTPS/JSON + Firebase ID Tokens" --> Backend
+
+    subgraph Backend ["Express Backend (GCP Cloud Run)"]
+        direction TB
+        Auth["Auth & Authz Middleware"]:::backend
+        Firebase["Firebase Admin SDK (JWT)"]:::backend
+        Routes["REST Routes"]:::backend
+        Services["Services Layer (Business Logic)"]:::backend
+        RPC["RPC Handlers (Grading, Cloning)"]:::backend
+        
+        Routes --> Auth
+        Auth <--> Firebase
+        Auth --> Services
+        Services --> RPC
+    end
+
+    subgraph Database ["Turso Database (libSQL)"]
+        direction TB
+        subgraph Tenancy ["Multi-Tenant Schema"]
+            clients["clients"]:::db --> tests["tests"]:::db
+            tests --> attempts["attempts"]:::db
+            attempts --> attempt_answers["attempt_answers"]:::db
+            clients --> profiles["profiles"]:::db
+            profiles --> user_roles["user_roles"]:::db
+            tests --> test_questions["test_questions"]:::db
+            questions["questions"]:::db --> test_questions
+            attempts --> proctoring_events["proctoring_events"]:::db
+            attempts --> audit_logs["audit_logs"]:::db
+        end
+        subgraph Billing ["Subscription & PPT Billing"]
+            subscription_plans["subscription_plans"]:::db --> client_subscriptions["client_subscriptions"]:::db
+            subscription_plans --> subscription_plan_features["subscription_plan_features"]:::db
+            client_subscriptions --> subscription_history["subscription_history"]:::db
+            subscription_history --> client_limits["client_limits"]:::db
+            test_packages["test_packages"]:::db --> client_test_purchases["client_test_purchases"]:::db
+            client_test_purchases --> client_features["client_features"]:::db
+            test_billing["test_billing"]:::db --> client_usage_monthly["client_usage_monthly"]:::db
+        end
+    end
+
+    Backend --> Database
 ```
 
 ### Frontend Architecture
