@@ -108,60 +108,6 @@ function Home(): JSX.Element {
               ))}
             </div>
 
-            {/* Features Section */}
-            <section className={styles.featuresSection}>
-              <h2 className={styles.sectionTitle}>Documentation Features</h2>
-              <div className={styles.featuresGrid}>
-                <div className={styles.featureItem}>
-                  <div className={styles.featureIcon}>📚</div>
-                  <h3>Comprehensive Guides</h3>
-                  <p>
-                    Complete documentation covering installation, configuration,
-                    and advanced topics.
-                  </p>
-                </div>
-                <div className={styles.featureItem}>
-                  <div className={styles.featureIcon}>🔍</div>
-                  <h3>Full-Text Search</h3>
-                  <p>
-                    Quickly find what you need with our powerful search
-                    functionality.
-                  </p>
-                </div>
-                <div className={styles.featureItem}>
-                  <div className={styles.featureIcon}>📱</div>
-                  <h3>Mobile Responsive</h3>
-                  <p>
-                    Access documentation on any device - desktop, tablet, or
-                    mobile.
-                  </p>
-                </div>
-                <div className={styles.featureItem}>
-                  <div className={styles.featureIcon}>🌙</div>
-                  <h3>Dark Mode</h3>
-                  <p>
-                    Built-in dark mode support for comfortable reading at any
-                    time.
-                  </p>
-                </div>
-                <div className={styles.featureItem}>
-                  <div className={styles.featureIcon}>⚡</div>
-                  <h3>Fast & Reliable</h3>
-                  <p>
-                    Deployed on Cloudflare Pages for lightning-fast global
-                    delivery.
-                  </p>
-                </div>
-                <div className={styles.featureItem}>
-                  <div className={styles.featureIcon}>🔄</div>
-                  <h3>Always Up-to-Date</h3>
-                  <p>
-                    Documentation is continuously updated to reflect the latest
-                    features.
-                  </p>
-                </div>
-              </div>
-            </section>
 
             {/* Getting Started CTA */}
             <section className={styles.ctaSection}>

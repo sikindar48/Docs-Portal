@@ -5,10 +5,10 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'NS Software Solutions',
   tagline: 'Documentation Portal for all NS Software products',
-  favicon: 'img/favicon.ico',
+  favicon: 'img/logo.png',
 
   // Set the production url of your site here
-  url: 'https://docs.nssoftwaresolutions.in',
+  url: 'https://docs-portal.info-nssoftwaresolutions.workers.dev',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<projectName>/'
   baseUrl: '/',
@@ -17,6 +17,13 @@ const config: Config = {
   // If you aren't using GitHub pages, you don't need these.
   organizationName: 'ns-software-solutions',
   projectName: 'docs-portal',
+
+  stylesheets: [
+    {
+      href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap',
+      type: 'text/css',
+    },
+  ],
 
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
@@ -49,13 +56,19 @@ const config: Config = {
   ],
 
   themeConfig: {
+    docs: {
+      sidebar: {
+        hideable: true,
+        autoCollapseCategories: true,
+      },
+    },
     // Replace with your project's social card
     image: 'img/social-card.png',
     navbar: {
       title: 'NS Software Solutions',
       logo: {
         alt: 'NS Logo',
-        src: 'img/ns-logo.svg',
+        src: 'img/logo.png',
       },
       items: [
         {

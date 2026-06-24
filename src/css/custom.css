@@ -8,230 +8,188 @@
 
 /* You can override the default Infima CSS variables here. */
 :root {
-  --ifm-color-primary: #0066cc;
-  --ifm-color-primary-dark: #0052a3;
-  --ifm-color-primary-darker: #00478f;
-  --ifm-color-primary-darkest: #002e5c;
-  --ifm-color-primary-light: #3385d6;
-  --ifm-color-primary-lighter: #4d91dd;
-  --ifm-color-primary-lightest: #7aafea;
+  --ifm-font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --ifm-color-primary: #0f62fe; /* Modern IBM-style blue, very premium */
+  --ifm-color-primary-dark: #0043ce;
+  --ifm-color-primary-darker: #002d9c;
+  --ifm-color-primary-darkest: #001141;
+  --ifm-color-primary-light: #4589ff;
+  --ifm-color-primary-lighter: #78a9ff;
+  --ifm-color-primary-lightest: #a6c8ff;
 
-  --ifm-code-font-size: 95%;
+  --ifm-code-font-size: 90%;
+  --ifm-background-color: #fafafa;
   --docusaurus-published-at: rgb(101, 105, 115);
   --docusaurus-tag-background-color: #ebedf0;
+  
+  --ifm-heading-font-weight: 600;
+  --ifm-sidebar-width: 280px;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
 [data-theme='dark'] {
-  --ifm-color-primary: #4da6ff;
-  --ifm-color-primary-dark: #3d94e6;
-  --ifm-color-primary-darker: #3589d9;
-  --ifm-color-primary-darkest: #1f5ba3;
-  --ifm-color-primary-light: #5db3ff;
-  --ifm-color-primary-lighter: #6bc0ff;
-  --ifm-color-primary-lightest: #a4d4ff;
-  --docusaurus-tag-background-color: #25292e;
+  --ifm-color-primary: #4589ff;
+  --ifm-color-primary-dark: #3b7ad9;
+  --ifm-color-primary-darker: #2f69c4;
+  --ifm-color-primary-darkest: #1a418a;
+  --ifm-color-primary-light: #6ea6ff;
+  --ifm-color-primary-lighter: #94beff;
+  --ifm-color-primary-lightest: #c8deff;
+  
+  --ifm-background-color: #0e1117;
+  --docusaurus-tag-background-color: #21262d;
+}
+
+/* Custom global styles to make it look premium and not plain */
+body {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Navbar enhancement */
+.navbar {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: none;
+  backdrop-filter: blur(8px);
+  background-color: rgba(255, 255, 255, 0.9);
+}
+
+[data-theme='dark'] .navbar {
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background-color: rgba(14, 17, 23, 0.9);
+}
+
+/* Sidebar enhancement */
+.theme-doc-sidebar-container {
+  border-right: 1px solid rgba(0, 0, 0, 0.08) !important;
+}
+
+[data-theme='dark'] .theme-doc-sidebar-container {
+  border-right: 1px solid rgba(255, 255, 255, 0.08) !important;
+}
+
+.menu__link {
+  font-size: 0.925rem;
+  font-weight: 500;
+  border-radius: 6px;
+  margin: 2px 0;
+  color: #4b5563;
+}
+
+[data-theme='dark'] .menu__link {
+  color: #9ca3af;
+}
+
+.menu__link--active {
+  background-color: rgba(15, 98, 254, 0.08) !important;
+  color: var(--ifm-color-primary) !important;
+}
+
+[data-theme='dark'] .menu__link--active {
+  background-color: rgba(69, 137, 255, 0.12) !important;
+  color: var(--ifm-color-primary-light) !important;
+}
+
+/* Document content styles */
+.theme-doc-markdown {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: #1f2937;
+}
+
+[data-theme='dark'] .theme-doc-markdown {
+  color: #e5e7eb;
+}
+
+.theme-doc-markdown h1,
+.theme-doc-markdown h2,
+.theme-doc-markdown h3 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.theme-doc-markdown code {
+  background-color: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 4px;
+  padding: 0.2rem 0.4rem;
+}
+
+[data-theme='dark'] .theme-doc-markdown code {
+  background-color: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .docTitle {
-  font-size: 3rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 0.5rem;
 }
 
 .docSubtitle {
-  font-size: 1.5rem;
-  color: #666;
-  margin-bottom: 3rem;
+  font-size: 1.25rem;
+  color: #4b5563;
+  margin-bottom: 2.5rem;
 }
 
-.productGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 3rem 0;
+[data-theme='dark'] .docSubtitle {
+  color: #9ca3af;
+}
+
+/* Home Page specific styles */
+.heroSection {
+  background: radial-gradient(circle at top left, #0f62fe 0%, #001141 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme='dark'] .heroSection {
+  background: radial-gradient(circle at top left, #1c3d7d 0%, #0e1117 100%);
 }
 
 .productCard {
-  display: flex;
-  flex-direction: column;
-  padding: 2rem;
-  border: 2px solid #e0e0e0;
-  border-radius: 12px;
-  transition: all 0.3s ease;
-  background: #fff;
-  text-decoration: none;
-  color: inherit;
+  border: 1px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  background: #ffffff;
 }
 
 [data-theme='dark'] .productCard {
-  background: #1a1a1a;
-  border-color: #444;
+  background: #161b22;
+  border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 .productCard:hover {
   transform: translateY(-4px);
-  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.15);
-  border-color: var(--ifm-color-primary);
+  border-color: var(--ifm-color-primary) !important;
+  box-shadow: 0 8px 24px rgba(15, 98, 254, 0.08);
 }
 
 [data-theme='dark'] .productCard:hover {
-  box-shadow: 0 8px 24px rgba(77, 166, 255, 0.15);
-}
-
-.productIcon {
-  width: 64px;
-  height: 64px;
-  margin-bottom: 1rem;
-  font-size: 3rem;
-}
-
-.productName {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-bottom: 0.5rem;
-  color: var(--ifm-color-primary);
-}
-
-.productDescription {
-  font-size: 1rem;
-  color: #666;
-  margin-bottom: 1.5rem;
-  flex-grow: 1;
-  line-height: 1.6;
-}
-
-[data-theme='dark'] .productDescription {
-  color: #ccc;
+  border-color: var(--ifm-color-primary-light) !important;
+  box-shadow: 0 8px 24px rgba(69, 137, 255, 0.12);
 }
 
 .productButton {
-  display: inline-block;
-  padding: 0.75rem 1.5rem;
-  background: var(--ifm-color-primary);
-  color: white;
   border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-  text-align: center;
+  font-weight: 600;
+  font-size: 0.95rem;
 }
 
-.productButton:hover {
-  background: var(--ifm-color-primary-dark);
-  text-decoration: none;
-  transform: translateX(2px);
+.ctaSection {
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  background: #ffffff;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
 }
 
-.heroSection {
-  text-align: center;
-  padding: 4rem 2rem;
-  background: linear-gradient(135deg, #0066cc 0%, #004299 100%);
-  color: white;
-  border-radius: 12px;
-  margin-bottom: 4rem;
+[data-theme='dark'] .ctaSection {
+  background: #161b22;
+  border-color: rgba(255, 255, 255, 0.06);
 }
 
-[data-theme='dark'] .heroSection {
-  background: linear-gradient(135deg, #1a4d99 0%, #0d2a5c 100%);
-}
-
-.heroTitle {
-  font-size: 2.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.heroSubtitle {
-  font-size: 1.2rem;
-  opacity: 0.9;
-  margin-bottom: 1.5rem;
-}
-
-.quickLinks {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 2rem;
-}
-
-.quickLinkBtn {
-  padding: 0.75rem 1.5rem;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid white;
-  color: white;
+.ctaButton {
   border-radius: 6px;
-  text-decoration: none;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.quickLinkBtn:hover {
-  background: rgba(255, 255, 255, 0.3);
-  text-decoration: none;
-}
-
-.featureHighlight {
-  padding: 2rem;
-  background: #f5f5f5;
-  border-left: 4px solid var(--ifm-color-primary);
-  border-radius: 6px;
-  margin: 2rem 0;
-}
-
-[data-theme='dark'] .featureHighlight {
-  background: #222;
-  border-left-color: var(--ifm-color-primary-light);
-}
-
-.statsSection {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 2rem;
-  margin: 3rem 0;
-}
-
-.statBox {
-  text-align: center;
-  padding: 2rem;
-}
-
-.statNumber {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: var(--ifm-color-primary);
-  margin-bottom: 0.5rem;
-}
-
-.statLabel {
-  font-size: 1rem;
-  color: #666;
-}
-
-[data-theme='dark'] .statLabel {
-  color: #ccc;
-}
-
-/* Responsive adjustments */
-@media (max-width: 768px) {
-  .heroTitle {
-    font-size: 2rem;
-  }
-
-  .docTitle {
-    font-size: 2rem;
-  }
-
-  .productGrid {
-    grid-template-columns: 1fr;
-  }
-
-  .quickLinks {
-    flex-direction: column;
-  }
-
-  .quickLinkBtn {
-    width: 100%;
-  }
+  font-weight: 600;
 }
