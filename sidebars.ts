@@ -1,7 +1,7 @@
 import type {SidebarsConfig} from '@docusaurus/types';
 
 const sidebars: SidebarsConfig = {
-  // Exam Portal Sidebar (only this for now)
+  // Flat Exam Portal Sidebar with all pages directly accessible
   examPortalSidebar: [
     {
       type: 'doc',
@@ -9,48 +9,74 @@ const sidebars: SidebarsConfig = {
       label: 'Overview',
     },
     {
-      type: 'category',
+      type: 'doc',
+      id: 'exam-portal/getting-started',
       label: 'Getting Started',
-      items: [
-        'exam-portal/getting-started',
-        'exam-portal/installation',
-        'exam-portal/quick-start',
-      ],
     },
     {
-      type: 'category',
-      label: 'Core Concepts',
-      items: [
-        'exam-portal/architecture',
-        'exam-portal/database-schema',
-        'exam-portal/features-and-workflows',
-      ],
+      type: 'doc',
+      id: 'exam-portal/installation',
+      label: 'Installation',
     },
     {
-      type: 'category',
-      label: 'API Documentation',
-      items: [
-        'exam-portal/api-reference',
-        'exam-portal/authentication',
-        'exam-portal/error-codes',
-      ],
+      type: 'doc',
+      id: 'exam-portal/quick-start',
+      label: 'Quick Start',
     },
     {
-      type: 'category',
-      label: 'Advanced Topics',
-      items: [
-        'exam-portal/security-and-exam-integrity',
-        'exam-portal/performance-optimization',
-      ],
+      type: 'doc',
+      id: 'exam-portal/architecture',
+      label: 'System Architecture',
     },
     {
-      type: 'category',
-      label: 'Operations & Monitoring',
-      items: [
-        'exam-portal/monitoring-and-operations',
-        'exam-portal/deployment-guide',
-        'exam-portal/troubleshooting',
-      ],
+      type: 'doc',
+      id: 'exam-portal/database-schema',
+      label: 'Database Schema',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/features-and-workflows',
+      label: 'Features & Workflows',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/api-reference',
+      label: 'API Reference',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/authentication',
+      label: 'Authentication',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/error-codes',
+      label: 'Error Codes',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/security-and-exam-integrity',
+      label: 'Security & Exam Integrity',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/performance-optimization',
+      label: 'Performance Optimization',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/monitoring-and-operations',
+      label: 'Monitoring & Operations',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/deployment-guide',
+      label: 'Deployment Guide',
+    },
+    {
+      type: 'doc',
+      id: 'exam-portal/troubleshooting',
+      label: 'Troubleshooting',
     },
     {
       type: 'doc',

@@ -15,6 +15,28 @@ The NS Exam Portal uses a modern cloud-native architecture with separate deploym
 - **Backend**: Node.js API deployed on GCP Cloud Run
 - **Database**: Turso (serverless SQLite) with global distribution
 
+```mermaid
+graph TD
+    classDef cloud fill:#eff6ff,stroke:#2563eb,stroke-width:1px,color:#1e3a8a;
+    classDef process fill:#f3f4f6,stroke:#4b5563,stroke-width:1px,color:#1f2937;
+
+    Developer["Developer Push to GitHub"] --> Repo["GitHub Repository (main)"]
+    
+    %% Frontend Deployment Pipeline
+    Repo -- "Webhook Trigger" --> CF["Cloudflare Pages / Workers"]:::cloud
+    CF --> CFBuild["Install & Build<br>npm run build"]:::process
+    CFBuild --> CFDeploy["Deploy Static Assets<br>to Edge CDN"]:::process
+    
+    %% Backend Deployment Pipeline
+    Repo -- "Webhook Trigger" --> GCB["GCP Cloud Build"]:::cloud
+    GCB --> DockerBuild["Build & Tag Docker Image<br>gcloud builds submit"]:::process
+    DockerBuild --> GCR["Google Container Registry"]:::cloud
+    GCR --> GCRun["GCP Cloud Run (asia-south2)<br>gcloud run deploy"]:::cloud
+    
+    %% Database Connection
+    GCRun -- "libSQL Connection" --> Turso["Turso Database (Edge)"]:::cloud
+```
+
 ## Prerequisites
 
 - GCP project with billing enabled
