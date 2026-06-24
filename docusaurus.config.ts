@@ -72,12 +72,6 @@ const config: Config = {
   ],
 
   themeConfig: {
-    docs: {
-      sidebar: {
-        hideable: true,
-        autoCollapseCategories: true,
-      },
-    },
     // Replace with your project's social card
     image: 'img/social-card.png',
     navbar: {
@@ -88,14 +82,12 @@ const config: Config = {
       },
       items: [
         {
-          type: 'docSidebar',
-          sidebarId: 'examPortalSidebar',
-          label: 'Exam Portal',
-          position: 'left',
-        },
-        {
           href: 'https://github.com/ns-software-solutions',
           label: 'GitHub',
+          position: 'right',
+        },
+        {
+          type: 'search',
           position: 'right',
         },
       ],
@@ -104,52 +96,56 @@ const config: Config = {
       style: 'dark',
       links: [
         {
-          title: 'Documentation',
+          title: 'Exam Portal Docs',
           items: [
             {
               label: 'Overview',
               to: '/exam-portal/overview',
             },
             {
+              label: 'System Architecture',
+              to: '/exam-portal/architecture',
+            },
+            {
               label: 'API Reference',
               to: '/exam-portal/api-reference',
             },
             {
-              label: 'Architecture',
-              to: '/exam-portal/architecture',
-            },
-          ],
-        },
-        {
-          title: 'Resources',
-          items: [
-            {
               label: 'Deployment Guide',
               to: '/exam-portal/deployment-guide',
             },
+          ],
+        },
+        {
+          title: 'Internship Portal Docs',
+          items: [
             {
-              label: 'Security Guide',
-              to: '/exam-portal/security-and-exam-integrity',
+              label: 'Overview',
+              to: '/internship-portal/overview',
             },
             {
-              label: 'Changelog',
-              to: '/exam-portal/changelog',
+              label: 'Quick Start',
+              to: '/internship-portal/quick-start',
+            },
+            {
+              label: 'Architecture',
+              to: '/internship-portal/architecture',
             },
           ],
         },
         {
-          title: 'Links',
+          title: 'Company',
           items: [
             {
               label: 'Main Website',
               href: 'https://www.nssoftwaresolutions.in',
             },
             {
-              label: 'Contact',
+              label: 'Contact Us',
               href: 'https://www.nssoftwaresolutions.in/contact',
             },
             {
-              label: 'GitHub',
+              label: 'GitHub Organization',
               href: 'https://github.com/ns-software-solutions',
             },
           ],

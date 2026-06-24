@@ -93,8 +93,8 @@ body {
 
 /* Document content styles */
 .theme-doc-markdown {
-  font-size: 1.05rem;
-  line-height: 1.7;
+  font-size: 0.95rem;
+  line-height: 1.625;
   color: #1f2937;
 }
 
@@ -102,11 +102,34 @@ body {
   color: #e5e7eb;
 }
 
-.theme-doc-markdown h1,
-.theme-doc-markdown h2,
-.theme-doc-markdown h3 {
+.theme-doc-markdown h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.theme-doc-markdown h2 {
+  font-size: 1.45rem;
   font-weight: 700;
   letter-spacing: -0.02em;
+  margin-top: 2.25rem;
+  margin-bottom: 0.75rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  padding-bottom: 0.3rem;
+}
+
+[data-theme='dark'] .theme-doc-markdown h2 {
+  border-bottom-color: rgba(255, 255, 255, 0.08);
+}
+
+.theme-doc-markdown h3 {
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-top: 1.75rem;
+  margin-bottom: 0.5rem;
 }
 
 .theme-doc-markdown code {
@@ -122,14 +145,14 @@ body {
 }
 
 .docTitle {
-  font-size: 2.75rem;
+  font-size: 2.25rem;
   font-weight: 800;
   letter-spacing: -0.03em;
   margin-bottom: 0.5rem;
 }
 
 .docSubtitle {
-  font-size: 1.25rem;
+  font-size: 1.125rem;
   color: #4b5563;
   margin-bottom: 2.5rem;
 }
@@ -192,4 +215,31 @@ body {
 .ctaButton {
   border-radius: 6px;
   font-weight: 600;
+}
+
+/* Center Search Bar in Navbar */
+.navbar__search {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
+
+.navbar__inner {
+  position: relative;
+}
+
+@media (max-width: 996px) {
+  .navbar__search {
+    position: relative;
+    left: 0;
+    transform: none;
+    margin: 0.5rem 0;
+    width: 100%;
+  }
+}
+
+/* Hide documentation page bottom navigation (Next / Previous page buttons) */
+.pagination-nav {
+  display: none !important;
 }
