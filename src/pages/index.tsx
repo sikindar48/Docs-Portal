@@ -37,7 +37,7 @@ const products: Product[] = [
     icon: '🏢',
     description:
       'Company information, services, development standards, infrastructure documentation, and organizational guidelines.',
-    href: '/ns-software-solutions/about',
+    href: 'https://www.nssoftwaresolutions.in',
     color: '#722ed1',
   },
 ];
@@ -85,7 +85,7 @@ function Home(): JSX.Element {
                 Internship Portal Docs
               </Link>
               <Link
-                to="/ns-software-solutions/about"
+                to="https://www.nssoftwaresolutions.in"
                 className={styles.quickLinkBtn}>
                 Company Info
               </Link>

@@ -203,12 +203,12 @@ REINDEX idx_attempts_student_id;
 ## Disaster Recovery Plan
 
 ### Recovery Time Objective (RTO)
-- **Database**: <1 hour
-- **Application**: <30 minutes
-- **Full Service**: <2 hours
+- **Database**: &lt; 1 hour
+- **Application**: &lt; 30 minutes
+- **Full Service**: &lt; 2 hours
 
 ### Recovery Point Objective (RPO)
-- **Database**: <1 hour (last backup)
+- **Database**: &lt; 1 hour (last backup)
 - **Application Code**: Real-time (Git)
 
 ### DR Testing

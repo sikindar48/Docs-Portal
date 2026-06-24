@@ -21,8 +21,8 @@ A production-grade multi-tenant online examination platform for educational inst
 - [Environment Variables](#environment-variables)
 - [Deployment](#deployment)
 - [Development Guidelines](#development-guidelines)
-- [Known Limitations](#known-limitations)
-- [Support](#support)
+- [Known Limitations](#known-limitations--future-enhancements)
+- [Support](#support--contact)
 
 ---
 

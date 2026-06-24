@@ -127,7 +127,7 @@ CREATE INDEX idx_questions_client_id ON questions(client_id);
 - [ ] Queries profiled and optimized
 - [ ] Response compression enabled
 - [ ] Rate limiting active
-- [ ] Error rates <0.1%
+- [ ] Error rates &lt; 0.1%
 
 ### Infrastructure
 - [ ] CDN configured
