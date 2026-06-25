@@ -7,6 +7,18 @@ title: Troubleshooting
 
 Common issues and solutions for the Exam Portal.
 
+## Table of Contents
+
+- [Installation Issues](#installation-issues)
+- [Build Failures](#build-failures)
+- [Database Problems](#database-problems)
+- [Authentication Issues](#authentication-issues)
+- [API Issues](#api-issues)
+- [Frontend Issues](#frontend-issues)
+- [Performance Issues](#performance-issues)
+- [Runtime Issues](#runtime-issues)
+- [Getting Support](#getting-support)
+
 ## Installation Issues
 
 ### Node Modules Not Installing
@@ -14,6 +26,7 @@ Common issues and solutions for the Exam Portal.
 **Problem**: `npm install` fails with dependency errors
 
 **Solutions**:
+
 ```bash
 # Clear npm cache
 npm cache clean --force
@@ -32,9 +45,11 @@ npm install
 **Problem**: `Error: listen EADDRINUSE: address already in use :::8082`
 
 **Solutions**:
+
 ```bash
 # Find process using port
-lsof -i :8082
+lsof -i :8080
+lsof -i :5173
 
 # Kill process
 kill -9 <PID>
@@ -48,6 +63,7 @@ PORT=8083 npm run dev
 **Problem**: `Error: Firebase service account initialization failed`
 
 **Solutions**:
+
 - Verify `FIREBASE_SERVICE_ACCOUNT_JSON` environment variable is set
 - Ensure JSON is base64 encoded if required
 - Check Firebase project is active
@@ -58,66 +74,158 @@ PORT=8083 npm run dev
 echo $FIREBASE_SERVICE_ACCOUNT_JSON | base64 -d | jq
 ```
 
-## Database Issues
+## Build Failures
 
-### Database Connection Timeout
+### TypeScript Compilation Errors
 
-**Problem**: `Error: Failed to connect to database`
+**Problem**: `npm run build` fails with TypeScript errors
 
 **Solutions**:
+
 ```bash
-# Verify connection string
-echo $TURSO_CONNECTION_URL
+# Check for type errors
+npx tsc --noEmit
 
-# Test Turso connectivity
-curl -I $TURSO_CONNECTION_URL
+# Fix common issues
+# 1. Missing type definitions
+npm install --save-dev @types/node
 
-# Check auth token
-echo $TURSO_AUTH_TOKEN | wc -c  # Should be 64+ characters
-
-# Reconnect to Turso
-turso db show exam-portal-prod
+# 2. Clear build cache
+rm -rf dist/ .tsc-cache/
+npm run build
 ```
 
-### Migration Failed
+### ESLint/Lint Errors
 
-**Problem**: `Error: Migration script failed`
+**Problem**: Linting fails before build
 
 **Solutions**:
+
 ```bash
-# Check migration status
-turso db shell exam-portal-prod
+# Check lint errors
+npm run lint
+
+# Fix automatically where possible
+npm run lint -- --fix
+
+# Or disable for specific lines
+// eslint-disable-next-line
+const anyVariable = something;
+```
+
+### Frontend Build Size Too Large
+
+**Problem**: Frontend bundle exceeds size limits
+
+**Solutions**:
+
+```bash
+# Analyze bundle
+npm run build
+npm install -g source-map-explorer
+source-map-explorer 'dist/**/*.js'
+
+# Optimize:
+# 1. Enable code splitting in vite.config.ts
+# 2. Lazy load heavy components
+# 3. Remove unused dependencies
+```
+
+## Database Problems
+
+### Turso Connection Fails
+
+**Problem**: "Cannot connect to Turso database" or "Connection timeout"
+
+**Solutions**:
+
+```bash
+# 1. Verify connection string format
+# Should be: libsql://namespace-org.turso.io
+
+# 2. Check authentication token
+echo $TURSO_DATABASE_URL
+echo $TURSO_AUTH_TOKEN
+
+# 3. Test connection locally
+curl -H "Authorization: Bearer TOKEN" \
+  https://namespace-org.turso.io
+
+# 4. Restart application after env changes
+npm run dev
+```
+
+### Migration Fails or Hangs
+
+**Problem**: Database migrations hang or fail during startup
+
+**Solutions**:
+
+```bash
+# 1. Check logs for specific error
+# Application logs should show migration step
+
+# 2. If migrations hung:
+# - Kill application
+# - Check database status in Turso dashboard
+# - Restart application
+
+# 3. If specific column already exists:
+# This is expected - migrations skip existing columns
+# Check db.ts for ALTER TABLE IF NOT EXISTS
+
+# 4. Manual migration recovery
+turso db shell exam-portal
+.tables
+.schema tests
+```
+
+### Database Out of Sync
+
+**Problem**: Schema doesn't match expected structure
+
+**Solutions**:
+
+```bash
+# 1. Verify schema
+turso db shell exam-portal
 .schema
 
-# Manually run migration
-turso db shell exam-portal-prod < migrations/001_init.sql
+# 2. Check db.ts migrations
+# Look for all CREATE TABLE and ALTER TABLE statements
 
-# View migration errors
-turso db shell exam-portal-prod
-.log on
+# 3. If corrupted, restore from backup
+# Contact Turso support for point-in-time restore
 ```
 
-### Database Lock
+### Query Timeout or Slow Queries
 
-**Problem**: `Error: Database is locked`
+**Problem**: Database queries take too long
 
 **Solutions**:
-```bash
-# Check active connections
-turso db shell exam-portal-prod
-SELECT * FROM pragma_database_list;
 
-# Restart application to close hanging connections
-# Or increase connection timeout
+```bash
+# 1. Check indexes exist
+turso db shell exam-portal
+.indexes
+
+# 2. Verify all strategic indexes are created
+# See database-schema.md for index list
+
+# 3. Optimize queries
+# - Add pagination (LIMIT/OFFSET)
+# - Filter early (WHERE clauses)
+# - Use indexes for filters
 ```
 
-## API Issues
+## Authentication Issues
 
 ### 401 Unauthorized
 
 **Problem**: `Error: 401 Unauthorized`
 
 **Solutions**:
+
 - Verify token is present in `Authorization` header
 - Check token hasn't expired (`exp` claim)
 - Refresh token: `user.getIdToken(true)`
@@ -136,6 +244,7 @@ jwt_decode "$TOKEN"
 **Problem**: `Error: 403 Forbidden`
 
 **Solutions**:
+
 - Verify user has required role for endpoint
 - Check organization access (BOLA/IDOR protection)
 - Ensure request includes correct `client_id`
@@ -145,11 +254,53 @@ jwt_decode "$TOKEN"
 SELECT * FROM user_roles WHERE user_id = 'user-uuid';
 ```
 
+### Guest Authentication Fails
+
+**Problem**: Guest user cannot access attempt
+
+**Solutions**:
+
+- Verify `attempt_token` is included in query parameter or header (`x-attempt-token`)
+- Check token matches database record
+- Verify attempt exists and belongs to guest
+- Ensure anonymous auth enabled in Firebase Console
+
+### CORS Errors
+
+**Problem**: "CORS policy: No 'Access-Control-Allow-Origin' header"
+
+**Solutions**:
+
+- Check CORS configuration in `server.ts`
+- Verify frontend domain is in allowed origins
+- Restart backend after CORS config changes
+
+```bash
+# Test CORS preflight
+curl -X OPTIONS https://api.nssoftwaresolutions.in/api/tests \
+  -H "Origin: http://localhost:5173" \
+  -v
+```
+
+### Session Persistence Issues
+
+**Problem**: User logged in but session lost on refresh
+
+**Solutions**:
+
+- Verify token storage in browser (localStorage `firebase:authUser:*`)
+- Check Firebase SDK initialization configuration
+- Clear browser cache and cookies
+- Verify AuthContext provider setup
+
+## API Issues
+
 ### 404 Not Found
 
 **Problem**: `Error: 404 Not Found`
 
 **Solutions**:
+
 - Verify resource ID is correct UUID
 - Check resource exists in database
 - Verify organization access
@@ -164,6 +315,7 @@ SELECT * FROM tests WHERE id = 'test-uuid';
 **Problem**: `Error: 429 Too Many Requests`
 
 **Solutions**:
+
 - Implement exponential backoff in client
 - Check `X-RateLimit-Reset` header for reset time
 - Upgrade to higher tier plan if needed
@@ -177,13 +329,30 @@ async function retryWithBackoff(fn, maxRetries = 3) {
       return await fn();
     } catch (err) {
       if (err.status === 429) {
-        await new Promise(r => setTimeout(r, Math.pow(2, i) * 1000));
+        await new Promise((r) => setTimeout(r, Math.pow(2, i) * 1000));
         continue;
       }
       throw err;
     }
   }
 }
+```
+
+### Score Not Calculating
+
+**Problem**: Attempt score shows null or incorrect value
+
+**Solutions**:
+
+```sql
+-- Verify submission completed
+SELECT * FROM attempts WHERE id = 'attempt-uuid';
+
+-- Check answers saved
+SELECT COUNT(*) FROM attempt_answers WHERE attempt_id = 'attempt-uuid';
+
+-- Verify correct answers stored
+SELECT * FROM questions WHERE id = 'question-uuid';
 ```
 
 ## Frontend Issues
@@ -193,37 +362,18 @@ async function retryWithBackoff(fn, maxRetries = 3) {
 **Problem**: React app not rendering
 
 **Solutions**:
+
 - Check browser console for JavaScript errors
 - Verify `VITE_API_URL` environment variable
 - Clear browser cache and reload
 - Check React DevTools for component errors
-
-```bash
-# Enable React Development Mode
-VITE_DEBUG=true npm run dev
-```
-
-### CORS Error
-
-**Problem**: `Error: Access to XMLHttpRequest blocked by CORS policy`
-
-**Solutions**:
-- Verify backend CORS_ORIGIN environment variable
-- Check preflight OPTIONS request succeeds
-- Verify credentials are sent with requests
-
-```bash
-# Test CORS preflight
-curl -X OPTIONS https://api.nssoftwaresolutions.in/api/tests \
-  -H "Origin: http://localhost:5173" \
-  -v
-```
 
 ### Login Not Working
 
 **Problem**: Firebase authentication fails
 
 **Solutions**:
+
 - Verify `VITE_FIREBASE_CONFIG` is correct
 - Check Firebase console for authentication method configuration
 - Clear browser storage: `localStorage.clear()`
@@ -231,8 +381,8 @@ curl -X OPTIONS https://api.nssoftwaresolutions.in/api/tests \
 
 ```javascript
 // Debug Firebase auth
-firebase.auth().onAuthStateChanged(user => {
-  console.log('Auth state:', user);
+firebase.auth().onAuthStateChanged((user) => {
+  console.log("Auth state:", user);
 });
 ```
 
@@ -241,6 +391,7 @@ firebase.auth().onAuthStateChanged(user => {
 **Problem**: Student clicks submit but nothing happens
 
 **Solutions**:
+
 - Check network tab for failed API request
 - Verify exam answers were saved
 - Check browser console for JavaScript errors
@@ -253,6 +404,7 @@ firebase.auth().onAuthStateChanged(user => {
 **Problem**: Page takes >5 seconds to load
 
 **Solutions**:
+
 - Check network tab for slow API requests
 - Monitor API response times
 - Clear browser cache
@@ -263,25 +415,87 @@ firebase.auth().onAuthStateChanged(user => {
 **Problem**: API endpoints respond slowly (>2s)
 
 **Solutions**:
+
 ```bash
 # Check database query performance
 gcloud logging read "labels.component=api" --limit 20 --format=json | \
   jq '.[] | .jsonPayload.duration'
-
-# Review slow query logs
-gcloud sql operations list --instance=exam-portal
 
 # Check Cloud Run CPU/Memory
 gcloud run services describe exam-portal-backend \
   --region asia-south2
 ```
 
-## Contact Support
+## Runtime Issues
 
-For issues not covered here:
-- Email: support@nssoftwaresolutions.in
-- Documentation: https://docs.nssoftwaresolutions.in
-- GitHub Issues: https://github.com/ns-software-solutions/exam-portal/issues
+### Proctoring Events Not Logging
+
+**Problem**: Proctoring events not stored
+
+**Solutions**:
+
+- Verify feature enabled (`isFeatureEnabled('advanced_proctoring')`)
+- Check `proctoring_events` table exists
+- Verify event structure matches expected format
+- Check network requests in browser DevTools
+- Verify permissions (student should have permission)
+
+### High Memory Usage
+
+**Problem**: Application uses excessive memory
+
+**Solutions**:
+
+```bash
+# Monitor Cloud Run metrics
+gcloud run services describe exam-portal-api --region asia-south2
+
+# Add memory profiling
+NODE_OPTIONS=--max-old-space-size=1024 npm run dev
+
+# Optimize database queries (use pagination)
+# Clear old audit_logs if table grows large
+```
+
+## Getting Support
+
+### Debug Information to Collect
+
+When reporting issues, include:
+
+```bash
+# System information
+node --version
+npm --version
+git status
+
+# Error logs
+npm run dev 2>&1 | head -100
+
+# Database status
+turso db shell exam-portal
+SELECT COUNT(*) FROM clients;
+
+# Environment check
+echo "API: $VITE_API_URL"
+echo "Firebase Project: $VITE_FIREBASE_PROJECT_ID"
+
+# Browser console errors
+# Open DevTools > Console
+# Screenshot of error messages
+
+# Recent changes
+git log --oneline -10
+git diff HEAD~1
+```
+
+### Support Resources
+
+- **Email**: info.nssoftwaresolutions@gmail.com
+- **Documentation**: https://docs.nssoftwaresolutions.in
+- **API Reference**: /exam-portal/api-reference
+- **Error Codes**: /exam-portal/error-codes
+- **Monitoring**: /exam-portal/monitoring-and-operations
 
 ## Next Steps
 
