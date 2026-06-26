@@ -1,33 +1,123 @@
 ---
 id: overview
-title: Internship Portal Overview
+title: NS Internship Portal - Overview
 ---
 
-# Internship Portal
+# NS Internship Portal
 
-The NS Software Solutions Internship Portal is a comprehensive platform for managing internship programs, connecting students with industry opportunities, and tracking internship progress.
+The NS Software Solutions Internship Portal is a comprehensive web application for managing internship programs, connecting students with industry opportunities, and tracking internship progress. Built with Next.js, Supabase PostgreSQL, and Razorpay integration, the platform provides a complete end-to-end solution for internship management.
 
-> **Note**: This documentation section is under development. Detailed documentation for the Internship Portal will be available soon.
+**Live Demo:** [https://internships.nssoftwaresolutions.in](https://internships.nssoftwaresolutions.in)
 
-## Key Features (Planned)
+## Key Features
 
-- **Student Applications**: Structured application process with portfolio submission
-- **Company Partnerships**: Business collaboration and internship posting
-- **Progress Tracking**: Milestone tracking and performance evaluation
-- **Certificate Generation**: Automated certificate issuance
-- **Mentorship Programs**: Professional guidance and support
+### For Students
+- Browse and enroll in internship domains
+- Complete milestones with sequential tracking
+- Submit projects and receive certificates
+- Browse and save job listings
+- Download certificates and invoices
+- Receive notifications and announcements
 
-## Coming Soon
+### For Administrators
+- Manage domains, enrollments, and milestones
+- Review and approve submissions
+- Issue certificates and generate invoices
+- Create announcements with multi-channel delivery
+- Manage jobs from multiple sources (SerpAPI + RSS)
+- View analytics and reports
+- Email queue management with open tracking
 
-Full documentation for the Internship Portal is currently being prepared. This section will include:
+### Advanced Features
+- 5 user roles with granular permissions
+- Email notification system with 14 templates
+- Job aggregation from SerpAPI + 8 RSS feeds
+- Webinar platform with Jitsi Meet integration
+- Chatbot lead capture for student acquisition
+- Newsletter subscription and lead conversion
 
-- Installation and setup guides
-- Architecture overview
-- API documentation
-- Deployment instructions
-- User guides for students and companies
+## Platform Statistics
 
----
+| Metric | Value |
+|--------|-------|
+| **Version** | 3.7.0 (April 27, 2026) |
+| **Total Features** | 100% complete |
+| **Database Tables** | 26+ core tables + extensions |
+| **API Endpoints** | 57+ endpoints |
+| **User Roles** | 5 (student, reviewer, project_admin, admin, super_admin) |
+| **Permissions** | 28 granular permissions |
+| **Internship Domains** | 10 domains |
+| **Email Templates** | 14 transactional templates |
+| **Cron Jobs** | 4 automated tasks |
 
-**For more information about our internship program, visit:**
-[internships.nssoftwaresolutions.in](https://internships.nssoftwaresolutions.in)
+## Technology Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | Next.js 14 (App Router), React 18, TypeScript 5, Tailwind CSS |
+| **Backend** | Next.js API Routes (Edge Runtime compatible) |
+| **Database** | Supabase (PostgreSQL) with RLS |
+| **Authentication** | JWT via jose 6.2.1 + refresh token rotation |
+| **Payment** | Razorpay 2.9.2 |
+| **Email** | Nodemailer via Resend SMTP |
+| **File Storage** | Cloudinary (video, PDF, documents) |
+| **PDF** | PDFKit 0.14.0 with QR codes |
+| **Job Aggregation** | SerpAPI + RSS feeds |
+| **Video** | Jitsi Meet (JAAS) for webinars |
+| **Testing** | Playwright (E2E) |
+| **Deployment** | Vercel with cron jobs |
+
+## Platform Architecture
+
+The platform follows a modern architecture with:
+- Client-server separation with API routes
+- JWT-based authentication with refresh token rotation
+- Email queuing system for reliable delivery
+- In-memory caching for analytics
+- Row Level Security (RLS) for database protection
+- Rate limiting to prevent abuse
+- Comprehensive admin audit logging
+
+## Next Steps
+
+- **[Quick Start](/internship-portal/quick-start)** - Get started quickly
+- **[Installation](/internship-portal/installation)** - Detailed setup instructions
+- **[Architecture](/internship-portal/architecture)** - System design and flow diagrams
+- **[Database Schema](/internship-portal/database-schema)** - Complete database documentation
+- **[API Reference](/internship-portal/api-reference)** - All API endpoints
+- **[Features & Flows](/internship-portal/features-and-workflows)** - Feature specifications and user flows
+
+
+## Recent Updates (v3.7.0 — April 27, 2026)
+
+The platform is continuously updated with new features and improvements:
+
+### Latest Improvements
+- **Newsletter subscriber capture** with welcome email automation
+- **Redesigned leads modal** with improved UX and conversion flow
+- **Unauthenticated user experience** with domain pre-selection
+- **Modern footer design** with 5-column responsive layout
+- **SEO optimization** with 40+ keywords and structured data
+- **Build optimization** with all lint errors resolved
+- **Performance improvements** across all platform components
+
+### Platform Roadmap
+- Advanced reporting and analytics dashboard
+- Mobile app integration for on-the-go access
+- AI-powered resume matching and career guidance
+- Multi-language support for international students
+- Advanced search filters and personalized recommendations
+
+See the [Changelog](/internship-portal/changelog) for complete version history and bug tracking.
+
+## Documentation Standards
+
+All documentation follows rigorous standards to ensure accuracy and usability:
+
+- **Version tracking** - Every document includes version number and last updated date
+- **Completeness** - All features, APIs, and database structures fully documented
+- **Real examples** - Working code samples in multiple languages (JavaScript, Python, cURL)
+- **Cross-references** - Links between related documentation for easy navigation
+- **Visual aids** - Mermaid diagrams for architecture, flows, and relationships
+- **Testing focus** - Comprehensive test credentials and scenarios provided
+- **Security emphasis** - OWASP compliance and security best practices highlighted

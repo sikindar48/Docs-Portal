@@ -1,6 +1,65 @@
 import type {SidebarsConfig} from '@docusaurus/types';
 
 const sidebars: SidebarsConfig = {
+  // Flat Internship Portal Sidebar with all pages directly accessible
+  internshipPortalSidebar: [
+    {
+      type: 'doc',
+      id: 'internship-portal/overview',
+      label: 'Overview',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/quick-start',
+      label: 'Quick Start',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/installation',
+      label: 'Installation',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/architecture',
+      label: 'System Architecture',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/database-schema',
+      label: 'Database Schema',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/api-reference',
+      label: 'API Reference',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/features-and-workflows',
+      label: 'Features & Workflows',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/testing-and-credentials',
+      label: 'Testing & Credentials',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/security',
+      label: 'Security & Compliance',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/deployment',
+      label: 'Deployment Guide',
+    },
+    {
+      type: 'doc',
+      id: 'internship-portal/changelog',
+      label: 'Changelog & Bug Tracking',
+    },
+  ],
+
   // Flat Exam Portal Sidebar with all pages directly accessible
   examPortalSidebar: [
     {
