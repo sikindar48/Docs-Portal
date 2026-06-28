@@ -1,6 +1,40 @@
 import type {SidebarsConfig} from '@docusaurus/types';
 
 const sidebars: SidebarsConfig = {
+  // NS Website Sidebar
+  nsWebsiteSidebar: [
+    {
+      type: 'doc',
+      id: 'ns-website/overview',
+      label: 'Overview',
+    },
+    {
+      type: 'doc',
+      id: 'ns-website/quick-start',
+      label: 'Quick Start',
+    },
+    {
+      type: 'doc',
+      id: 'ns-website/installation',
+      label: 'Installation',
+    },
+    {
+      type: 'doc',
+      id: 'ns-website/architecture',
+      label: 'System Architecture',
+    },
+    {
+      type: 'doc',
+      id: 'ns-website/database-schema',
+      label: 'Database Schema',
+    },
+    {
+      type: 'doc',
+      id: 'ns-website/features-and-workflows',
+      label: 'Features & Workflows',
+    },
+  ],
+
   // Flat Internship Portal Sidebar with all pages directly accessible
   internshipPortalSidebar: [
     {

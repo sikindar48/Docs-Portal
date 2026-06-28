@@ -41,6 +41,7 @@ const products: Product[] = [
     description:
       'Company information, services, development standards, infrastructure documentation, and organizational guidelines.',
     href: 'https://www.nssoftwaresolutions.in',
+    docsHref: '/ns-website/overview',
     color: '#722ed1',
   },
 ];
@@ -90,6 +91,11 @@ function Home(): JSX.Element {
                 to="/internship-portal/overview"
                 className={styles.quickLinkBtn}>
                 Internship Portal Docs
+              </Link>
+              <Link
+                to="/ns-website/overview"
+                className={styles.quickLinkBtn}>
+                NS Website Docs
               </Link>
               <Link
                 to="https://www.nssoftwaresolutions.in"

@@ -80,12 +80,53 @@ The platform follows a modern architecture with:
 
 ## Next Steps
 
-- **[Quick Start](/internship-portal/quick-start)** - Get started quickly
-- **[Installation](/internship-portal/installation)** - Detailed setup instructions
-- **[Architecture](/internship-portal/architecture)** - System design and flow diagrams
-- **[Database Schema](/internship-portal/database-schema)** - Complete database documentation
-- **[API Reference](/internship-portal/api-reference)** - All API endpoints
-- **[Features & Flows](/internship-portal/features-and-workflows)** - Feature specifications and user flows
+import DocCardList from '@theme/DocCardList';
+
+<div style={{display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))', gap: '1rem', marginTop: '2rem'}}>
+
+<div style={{padding: '1rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f9f9f9'}}>
+
+**⚡ [Quick Start](/docs/internship-portal/quick-start)**
+Get started quickly with test credentials
+
+</div>
+
+<div style={{padding: '1rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f9f9f9'}}>
+
+**🔧 [Installation](/docs/internship-portal/installation)**
+Detailed setup instructions
+
+</div>
+
+<div style={{padding: '1rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f9f9f9'}}>
+
+**🏗️ [System Architecture](/docs/internship-portal/architecture)**
+System design and flow diagrams
+
+</div>
+
+<div style={{padding: '1rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f9f9f9'}}>
+
+**🗄️ [Database Schema](/docs/internship-portal/database-schema)**
+Complete database documentation
+
+</div>
+
+<div style={{padding: '1rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f9f9f9'}}>
+
+**🔌 [API Reference](/docs/internship-portal/api-reference)**
+All API endpoints and examples
+
+</div>
+
+<div style={{padding: '1rem', border: '1px solid #e0e0e0', borderRadius: '8px', backgroundColor: '#f9f9f9'}}>
+
+**🎯 [Features & Workflows](/docs/internship-portal/features-and-workflows)**
+Feature specifications and user flows
+
+</div>
+
+</div>
 
 
 ## Recent Updates (v3.7.0 — April 27, 2026)
